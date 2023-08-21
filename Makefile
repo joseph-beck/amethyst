@@ -1,14 +1,22 @@
-BUILD_DIR 	:= ./build
-OBJ_DIR 	:= $(BUILD_DIR)/objects
-APP_DIR 	:= $(BUILD_DIR)/app
-SRC			:= $(shell find src -name "*.c")
+BUILD_DIR := ./build
+OBJ_DIR   := $(BUILD_DIR)/objects
+APP_DIR   := $(BUILD_DIR)/app
+SRC       := $(shell find src -name "*.c")
+OBJ       := $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
-build: $(SRC)
+CFLAGS    := -g -MMD -MP
+
+build: $(APP_DIR)/program
+
+$(APP_DIR)/program: $(OBJ)
 	@mkdir -p $(APP_DIR)
-	@mkdir -p $(OBJ_DIR)
-	cc -o $(APP_DIR)/program -g $(SRC)
+	cc -o $@ -g $(OBJ)
 
-run:
+$(OBJ_DIR)/%.o: src/%.c
+	@mkdir -p $(@D)
+	cc $(CFLAGS) -o $@ -c $<
+
+run: build
 	./$(APP_DIR)/program ./input/01
 	./$(APP_DIR)/program ./input/02
 	./$(APP_DIR)/program ./input/03
@@ -16,6 +24,8 @@ run:
 	./$(APP_DIR)/program ./input/05
 
 clean:
-	rm -r build/app
+	rm -r $(BUILD_DIR)
 
 .PHONY: build clean run
+
+-include $(OBJ:.o=.d)

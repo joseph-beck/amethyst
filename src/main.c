@@ -1,9 +1,4 @@
-#include "compiler/defs.h"
-#define extern_
-#include "compiler/data.h"
-#undef extern_
-#include "compiler/decl.h"
-#include <errno.h>
+#include "compiler/compiler.h"
 
 // Initialise global variables
 static void init()
@@ -19,9 +14,8 @@ static void usage(char *prog)
     exit(1);
 }
 
-// Main program: check arguments and print a usage
-// if we don't have an argument. Open up the input
-// file and call scanfile() to scan the tokens in it.
+// Entry point, check arguments and print a usage.
+// Open up the input file and call scanfile() to scan the tokens in it.
 void main(int argc, char *argv[])
 {
     struct AST_Node *n;
@@ -40,7 +34,7 @@ void main(int argc, char *argv[])
     }
 
     scan(&Token);			// Get the first token from the input
-    n = bin_expr();		// Parse the expression in the file
-    printf("%d\n", interpret_AST(n));	// Calculate the final result
+    n = binary_expr();		// Parse the expression in the file
+    printf("%d\n", interpret_ast(n));	// Calculate the final result
     exit(0);
 }

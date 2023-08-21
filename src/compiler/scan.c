@@ -1,6 +1,6 @@
-#include "defs.h"
 #include "data.h"
-#include "decl.h"
+#include "scan.h"
+#include "tokens.h"
 
 // Return the position of character c
 // in string s, or -1 if c not found

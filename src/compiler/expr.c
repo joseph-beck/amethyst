@@ -1,6 +1,7 @@
-#include "defs.h"
 #include "data.h"
-#include "decl.h"
+#include "tokens.h"
+#include "tree.h"
+#include "scan.h"
 
 // Parse a primary factor and return an
 // AST node representing it.
@@ -24,7 +25,7 @@ static struct AST_Node* primary(void)
 
 
 // Convert a token into an AST operation.
-int arith_op(int token)
+int arithmetic_op(int token)
 {
     switch (token) {
         case T_PLUS:
@@ -36,14 +37,14 @@ int arith_op(int token)
         case T_SLASH:
             return (A_DIVIDE);
         default:
-            fprintf(stderr, "unknown token in arith_op() on line %d\n", Line);
+            fprintf(stderr, "unknown token in arithmetic_op() on line %d\n", Line);
             exit(1);
     }
 }
 
 
 // Return an AST tree whose root is a binary operator
-struct AST_Node* bin_expr(void)
+struct AST_Node* binary_expr(void)
 {
     struct AST_Node* n;
     struct AST_Node* left;
@@ -61,13 +62,13 @@ struct AST_Node* bin_expr(void)
     }
 
     // Convert the token into a node type
-    node_type = arith_op(Token.token);
+    node_type = arithmetic_op(Token.token);
 
     // Get the next token in
     scan(&Token);
 
     // Recursively get the right-hand tree
-    right = bin_expr();
+    right = binary_expr();
 
     // Now build a tree with both sub-trees
     n = make_ast_node(node_type, left, right, 0);

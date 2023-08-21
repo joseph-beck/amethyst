@@ -1,6 +1,6 @@
-#include "defs.h"
-#include "data.h"
-#include "decl.h"
+#include "tokens.h"
+#include "tree.h"
+#include "interp.h"
 
 // List of AST operators
 static char *AST_Operators[] = { "+", "-", "*", "/" };
@@ -8,18 +8,18 @@ static char *AST_Operators[] = { "+", "-", "*", "/" };
 // Given an AST, interpret the
 // operators in it and return
 // a final value.
-int interpret_AST(struct AST_Node* n) {
+int interpret_ast(struct AST_Node* n) {
     int left_val;
     int right_val;
 
     // Get the left and right sub-tree values
     if (n->left)
     {
-      left_val = interpret_AST(n->left);
+      left_val = interpret_ast(n->left);
     }
     if (n->right)
     {
-          right_val = interpret_AST(n->right);
+          right_val = interpret_ast(n->right);
     }
 
     // Debug: Print what we are about to do

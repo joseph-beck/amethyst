@@ -1,6 +1,5 @@
-#include "defs.h"
 #include "data.h"
-#include "decl.h"
+#include "tree.h"
 
 // Build and return a generic AST node
 struct AST_Node* make_ast_node(
