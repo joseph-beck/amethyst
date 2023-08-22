@@ -78,7 +78,8 @@ void cg_postamble()
         "\tmovl\t$0, %eax\n"
         "\tpopq\t%rbp\n"
         "\tret\n",
-        Outfile);
+        Outfile
+    );
 }
 
 // Load an integer literal value into a register.

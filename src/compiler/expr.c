@@ -15,7 +15,7 @@ static struct AST_Node* primary(void)
     switch (Token.token)
     {
     case T_INTLIT:
-        n = make_ast_leaf(A_INTLIT, Token.intvalue);
+        n = make_ast_leaf(A_INTLIT, Token.int_value);
         scan(&Token);
         return n;
     default:
