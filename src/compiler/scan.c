@@ -58,7 +58,7 @@ static int skip(void)
 // Scan and return an integer literal
 // value from the input file. Store
 // the value as a string in Text.
-static int scanint(int c) {
+static int scan_int(int c) {
     int k;
     int val = 0;
 
@@ -108,7 +108,7 @@ int scan(struct token *t)
         // literal integer value in
         if (isdigit(c))
         {
-            t->intvalue = scanint(c);
+            t->intvalue = scan_int(c);
             t->token = T_INTLIT;
             break;
         }

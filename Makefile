@@ -1,6 +1,7 @@
 BUILD_DIR := ./build
 OBJ_DIR   := $(BUILD_DIR)/objects
 APP_DIR   := $(BUILD_DIR)/app
+ASM_DIR   := $(BUILD_DIR)/asm
 SRC       := $(shell find src -name "*.c")
 OBJ       := $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
@@ -17,11 +18,16 @@ $(OBJ_DIR)/%.o: src/%.c
 	cc $(CFLAGS) -o $@ -c $<
 
 run: build
+
+	@mkdir -p $(ASM_DIR)
+
 	./$(APP_DIR)/program ./input/01
+	cc -o $(BUILD_DIR)/program $(ASM_DIR)/out.s
+	./$(ASM_DIR)/out.s
+
 	./$(APP_DIR)/program ./input/02
-	./$(APP_DIR)/program ./input/03
-	./$(APP_DIR)/program ./input/04
-	./$(APP_DIR)/program ./input/05
+	cc -o $(BUILD_DIR)/program $(ASM_DIR)/out.s
+	./$(ASM_DIR)/out.s
 
 clean:
 	rm -r $(BUILD_DIR)
