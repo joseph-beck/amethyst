@@ -71,7 +71,7 @@ struct AST_Node* binary_expr(int ptp)
 
     // If no tokens left, return just the left node
     token_type = Token.token;
-    if (token_type == T_EOF)
+    if (token_type == T_SEMI)
     {
         return left;
     }
@@ -93,7 +93,7 @@ struct AST_Node* binary_expr(int ptp)
         // Update the details of the current token.
         // If no tokens left, return just the left node
         token_type = Token.token;
-        if (token_type == T_EOF)
+        if (token_type == T_SEMI)
         {
             return left;
         }   

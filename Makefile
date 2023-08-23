@@ -22,12 +22,9 @@ run: build
 	@mkdir -p $(ASM_DIR)
 
 	./$(APP_DIR)/program ./input/01
-	cc -o $(BUILD_DIR)/program $(ASM_DIR)/out.s
-	./$(ASM_DIR)/out.s
-
-	./$(APP_DIR)/program ./input/02
-	cc -o $(BUILD_DIR)/program $(ASM_DIR)/out.s
-	./$(ASM_DIR)/out.s
+	as -o $(ASM_DIR)/out.o $(ASM_DIR)/out.s
+	gcc -o $(ASM_DIR)/out $(ASM_DIR)/out.o
+	./$(ASM_DIR)/out
 
 clean:
 	rm -r $(BUILD_DIR)

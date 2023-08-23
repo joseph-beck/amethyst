@@ -8,7 +8,7 @@ static void init()
 }
 
 // Print out a usage if started incorrectly
-static void usage(char *prog)
+static void usage(char* prog)
 {
     fprintf(stderr, "Usage: %s infile\n", prog);
     exit(1);
@@ -16,10 +16,8 @@ static void usage(char *prog)
 
 // Entry point, check arguments and print a usage.
 // Open up the input file and call scanfile() to scan the tokens in it.
-void main(int argc, char *argv[])
+void main(int argc, char* argv[])
 {
-    struct AST_Node *n;
-
     if (argc != 2)
     {
         usage(argv[0]);
@@ -34,7 +32,7 @@ void main(int argc, char *argv[])
     }
 
      // Create the output file
-    if ((Outfile = fopen("out.s", "w")) == NULL)
+    if ((Outfile = fopen("build/asm/out.s", "w")) == NULL)
     {
         fprintf(stderr, "Unable to create out.s: %s\n", strerror(errno));
         exit(1);

@@ -14,8 +14,8 @@ struct AST_Node* make_ast_node(
     n = (struct AST_Node*) malloc(sizeof(struct AST_Node));
     if (n == NULL)
     {
-      fprintf(stderr, "Unable to malloc in mkastnode()\n");
-      exit(1);
+        fprintf(stderr, "Unable to malloc in mkastnode()\n");
+        exit(1);
     }
 
     // Copy in the field values and return it

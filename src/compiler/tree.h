@@ -16,4 +16,4 @@ struct AST_Node* make_ast_node(int operation, struct AST_Node* left, struct AST_
 
 struct AST_Node* make_ast_leaf(int operation, int int_value);
 
-struct AST_Node* make_ast_unary(int operation, struct AST_Node *left, int int_value);
+struct AST_Node* make_ast_unary(int operation, struct AST_Node* left, int int_value);
