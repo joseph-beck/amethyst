@@ -6,31 +6,63 @@
 #include "data.h"
 #include "statement.h"
 #include "scan.h"
+#include "fatal.h"
+
+void assignment_statement()
+{
+    struct AST_Node* left; 
+    struct AST_Node* right; 
+    struct AST_Node* tree;
+    int id;
+
+    // Ensure we have an identifier
+    ident();
+
+    // Check it's been defined then make a leaf node for it
+    if ((id = find_glob(Text)) == -1)
+    {
+        fatals("Undeclared variable", Text);
+    }
+    right = make_ast_leaf(A_LVIDENT, id);
+
+    // Ensure we have an equals sign
+    match_token(T_EQUALS, "=");
+
+    // Parse the following expression
+    left = binary_expr(0);
+
+    // Make an assignment AST tree
+    tree = make_ast_node(A_ASSIGN, left, right, 0);
+
+    // Generate the assembly code for the assignment
+    gen_ast(tree, -1);
+    gen_free_regs();
+
+    // Match the following semicolon
+    match_semi();
+}
+
 
 // Parse one or more statements
 void statements()
 {
-    struct AST_Node* tree;
-    int reg;
-
-    while (1) 
+    for ( ;; )
     {
-        // Match a 'print' as the first token
-        match_token(T_PRINT, "print");
-
-        // Parse the following expression and
-        // generate the assembly code
-        tree = binary_expr(0);
-        reg = gen_ast(tree);
-        gen_print_int(reg);
-        gen_free_regs();
-
-        // Match the following semicolon
-        // and stop if we are at EOF
-        match_semi();
-        if (Token.token == T_EOF)
+        switch (Token.token)
         {
+        case T_PRINT:
+            print_statement();
+            break;
+        case T_INT:
+            var_declaration();
+            break;
+        case T_IDENT:
+            assignment_statement();
+            break;
+        case T_EOF:
             return;
+        default:
+            fatald("Syntax error, token", Token.token);
         }
     }
 }
@@ -43,8 +75,7 @@ void match_token(int t, char* what)
     } 
     else 
     {
-        printf("%s expected on line %d\n", what, Line);
-        exit(1);
+        fatals("Expected", what);
     }
 }
 
@@ -52,4 +83,10 @@ void match_token(int t, char* what)
 void match_semi() 
 {
     match_token(T_SEMI, ";");
+}
+
+// Match an identifier and fetch the next token
+void match_ident()
+{
+    match_token(T_IDENT, "identifier");
 }

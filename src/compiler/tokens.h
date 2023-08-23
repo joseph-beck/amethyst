@@ -17,7 +17,11 @@ enum
     T_SLASH,
     T_INTLIT,
     T_SEMI,
-    T_PRINT
+    T_EQUALS,
+    T_IDENT,
+    // Keywords
+    T_PRINT,
+    T_INT
 };
 
 // Token structure
@@ -27,12 +31,3 @@ struct token
     int int_value;				// For T_INTLIT, the integer value
 };
 
-// AST node types
-enum
-{
-    A_ADD,
-    A_SUBTRACT,
-    A_MULTIPLY,
-    A_DIVIDE,
-    A_INTLIT
-};

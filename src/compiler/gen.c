@@ -4,7 +4,7 @@
 #include "scan.h"
 #include "cg.h"
 
-int gen_ast(struct AST_Node* n)
+int gen_ast(struct AST_Node* n, int reg)
 {
     int left_reg;
     int right_reg;
@@ -30,7 +30,14 @@ int gen_ast(struct AST_Node* n)
     case A_DIVIDE:
         return (cg_div(left_reg, right_reg));
     case A_INTLIT:
-        return (cg_load(n->int_value));
+        return (cg_load(n->v.int_value));
+    case A_IDENT:
+        return (cg_load_glob(Gsym[n->v.id].name));
+    case A_LVIDENT:
+        return (cg_storg_lob(reg, Gsym[n->v.id].name));
+    case A_ASSIGN:
+        // The work has already been done, return the result
+        return (right_reg);
     default:
         fprintf(stderr, "Unknown AST operator %d\n", n->operation);
         exit(1);
@@ -52,4 +59,9 @@ void gen_free_regs()
 void gen_print_int(int reg)
 {
     cg_print_int(reg);
+}
+
+void gen_glob_symbol(char* s)
+{
+    cg_glob_symbol(s);
 }

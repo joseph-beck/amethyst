@@ -117,7 +117,7 @@ int scan(struct token* t)
     {
     case EOF:
         t->token = T_EOF;
-        return 0;
+        return (0);
     case '+':
         t->token = T_PLUS;
         break;
@@ -132,6 +132,9 @@ int scan(struct token* t)
         break;
     case ';':
         t->token = T_SEMI;
+        break;
+    case '=':
+        t->token = T_EQUALS;
         break;
     default:
         // If it's a digit, scan the

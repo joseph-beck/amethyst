@@ -14,3 +14,6 @@
 #include "cg.h"
 #include "gen.h"
 #include "statement.h"
+#include "symbol.h"
+#include "fatal.h"
+#include "decl.h"

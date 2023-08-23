@@ -132,3 +132,16 @@ void cg_print_int(int r)
     fprintf(Outfile, "\tcall\tprintint\n");
     free_register(r);
 }
+
+// Store a register's value into a variable
+int cg_store_glob(int r, char* identifier)
+{
+    fprintf(Outfile, "\tmovq\t%s, %s(\%%rip)\n", reg_list[r], identifier);
+    return (r);
+}
+
+// Generate a global symbol
+void cg_glob_symbol(char* sym)
+{
+    fprintf(Outfile, "\t.comm\t%s,8,8\n", sym);
+}

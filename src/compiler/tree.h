@@ -9,7 +9,23 @@ struct AST_Node
   int operation;				        // "Operation" to be performed on this tree
   struct AST_Node* left;			    // Left child trees
   struct AST_Node* right;               // Right child trees
-  int int_value;				        // For A_INTLIT, the integer value
+  union {
+    int int_value;		// For A_INTLIT, the integer value
+    int id;			// For A_IDENT, the symbol slot number
+  } v;
+};
+
+// AST node types
+enum
+{
+    A_ADD,
+    A_SUBTRACT,
+    A_MULTIPLY,
+    A_DIVIDE,
+    A_INTLIT,
+    A_IDENT,
+    A_LVIDENT,
+    A_ASSIGN
 };
 
 struct AST_Node* make_ast_node(int operation, struct AST_Node* left, struct AST_Node* right, int int_value);
