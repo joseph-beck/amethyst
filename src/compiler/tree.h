@@ -6,7 +6,7 @@
 // Abstract Syntax Tree structure
 struct AST_Node
 {
-  int operation;				        // "Operation" to be performed on this tree
+  int operator;				        // "Operation" to be performed on this tree
   struct AST_Node* left;			    // Left child trees
   struct AST_Node* right;               // Right child trees
   union {

@@ -18,6 +18,10 @@ int cg_div(int r1, int r2);
 
 void cg_print_int(int r);
 
+int cg_load_int(int value);
+
 int cg_store_glob(int r, char* identifier);
 
 void cg_glob_symbol(char* sym);
+
+int cg_load_glob(char* identifier);

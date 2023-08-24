@@ -26,6 +26,16 @@ run: build
 	gcc -o $(ASM_DIR)/out $(ASM_DIR)/out.o
 	./$(ASM_DIR)/out
 
+	./$(APP_DIR)/program ./input/02
+	as -o $(ASM_DIR)/out.o $(ASM_DIR)/out.s
+	gcc -o $(ASM_DIR)/out $(ASM_DIR)/out.o
+	./$(ASM_DIR)/out
+
+	./$(APP_DIR)/program ./input/03
+	as -o $(ASM_DIR)/out.o $(ASM_DIR)/out.s
+	gcc -o $(ASM_DIR)/out $(ASM_DIR)/out.o
+	./$(ASM_DIR)/out
+
 clean:
 	rm -r $(BUILD_DIR)
 

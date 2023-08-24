@@ -2,26 +2,37 @@
 #include "tokens.h"
 #include "tree.h"
 #include "scan.h"
+#include "fatal.h"
+#include "symbol.h"
 
 // Parse a primary factor and return an
 // AST node representing it.
 static struct AST_Node* primary(void)
 {
     struct AST_Node* n;
+    int id;
 
-    // For an INTLIT token, make a leaf AST node for it
-    // and scan in the next token. Otherwise, report a syntax error
-    // for any other token type.
     switch (Token.token)
     {
     case T_INTLIT:
+        // For an INTLIT token, make a leaf AST node for it.
         n = make_ast_leaf(A_INTLIT, Token.int_value);
-        scan(&Token);
-        return n;
+        break;
+    case T_IDENT:
+        // Check that this identifier exists
+        id = find_glob(Text);
+        if (id == -1)
+        fatals("Unknown variable", Text);
+        // Make a leaf AST node for it
+        n = make_ast_leaf(A_IDENT, id);
+        break;
     default:
-        fprintf(stderr, "syntax error on line %d\n", Line);
-        exit(1);
+        fatald("Syntax error, token", Token.token);
     }
+
+    // Scan in the next token and return the leaf node
+    scan(&Token);
+    return (n);
 }
 
 // Convert a token into an AST operation.

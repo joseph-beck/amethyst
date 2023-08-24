@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <errno.h>
+
+#include "data.h"
+
 // Print out fatal messages
 void fatal(char* s)
 {

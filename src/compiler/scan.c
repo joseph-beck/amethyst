@@ -1,6 +1,7 @@
 #include "data.h"
 #include "scan.h"
 #include "tokens.h"
+#include "fatal.h"
 
 static int chr_pos(char* s, int c)
 {
@@ -95,13 +96,19 @@ static int scan_ident(int c, char* buf, int lim)
 // to waste time strcmp()ing against all the keywords.
 static int keyword(char* s)
 {
-    switch (*s)
+    switch (*s) 
     {
+    case 'i':
+        if (!strcmp(s, "int"))
+        {
+            return (T_INT);
+        }
+        break;
     case 'p':
         if (!strcmp(s, "print"))
         {
             return (T_PRINT);
-        }   
+        }
         break;
     }
     return (0);
@@ -156,13 +163,11 @@ int scan(struct token* t)
 	            t->token = token_type;
 	            break;
 	        }
-	        // Not a recognised keyword, so an error for now
-	        printf("Unrecognised symbol %s on line %d\n", Text, Line);
-	        exit(1);
+	        // Not a recognised keyword, so it must be an identifier
+            t->token = T_IDENT;
+            break;
         }
-        // The character isn't part of any recognised token, error
-        printf("Unrecognised character %c on line %d\n", c, Line);
-        exit(1);
+        fatalc("Unrecognised character", c);
     }
 
     return (1);

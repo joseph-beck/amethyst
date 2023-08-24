@@ -133,6 +133,16 @@ void cg_print_int(int r)
     free_register(r);
 }
 
+int cg_load_int(int value)
+{
+    // Get a new register
+    int r = alloc_register();
+
+    // Print out the code to initialise it
+    fprintf(Outfile, "\tmovq\t$%d, %s\n", value, reg_list[r]);
+    return (r);
+}
+
 // Store a register's value into a variable
 int cg_store_glob(int r, char* identifier)
 {
@@ -144,4 +154,16 @@ int cg_store_glob(int r, char* identifier)
 void cg_glob_symbol(char* sym)
 {
     fprintf(Outfile, "\t.comm\t%s,8,8\n", sym);
+}
+
+// Load a value from a variable into a register.
+// Return the number of the register
+int cg_load_glob(char* identifier)
+{
+    // Get a new register
+    int r = alloc_register();
+
+    // Print out the code to initialise it
+    fprintf(Outfile, "\tmovq\t%s(\%%rip), %s\n", identifier, reg_list[r]);
+    return (r);
 }

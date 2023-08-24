@@ -7,6 +7,26 @@
 #include "statement.h"
 #include "scan.h"
 #include "fatal.h"
+#include "decl.h"
+
+void print_statement()
+{
+    struct AST_Node* tree;
+    int reg;
+
+    // Match a 'print' as the first token
+    match_token(T_PRINT, "print");
+
+    // Parse the following expression and
+    // generate the assembly code
+    tree = binary_expr(0);
+    reg = gen_ast(tree, -1);
+    gen_print_int(reg);
+    gen_free_regs();
+
+    // Match the following semicolon
+    match_semi();
+}
 
 void assignment_statement()
 {
@@ -16,7 +36,7 @@ void assignment_statement()
     int id;
 
     // Ensure we have an identifier
-    ident();
+    match_ident();
 
     // Check it's been defined then make a leaf node for it
     if ((id = find_glob(Text)) == -1)

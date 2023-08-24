@@ -1,5 +1,7 @@
 #pragma once
 
+#include "tree.h"
+
 int gen_ast(struct AST_Node* n, int reg);
 
 void gen_preamble();

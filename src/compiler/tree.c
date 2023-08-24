@@ -19,10 +19,10 @@ struct AST_Node* make_ast_node(
     }
 
     // Copy in the field values and return it
-    n->operation = operation;
+    n->operator = operation;
     n->left = left;
     n->right = right;
-    n->int_value = int_value;
+    n->v.int_value = int_value;
     return (n);
 }
 

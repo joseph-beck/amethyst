@@ -1,5 +1,6 @@
 #include "symbol.h"
 #include "data.h"
+#include "fatal.h"
 
 static int globs = 0;
 

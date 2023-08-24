@@ -12,7 +12,7 @@ void var_declaration()
   // and a semicolon. Text now has the identifier's name.
   // Add it as a known identifier
     match_token(T_INT, "int");
-    ident();
+    match_ident();
     add_glob(Text);
     gen_glob_symbol(Text);
     match_semi();
